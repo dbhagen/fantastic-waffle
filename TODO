@@ -1,0 +1,29 @@
+Pulumi Local Stack for Dev/Prod Backend:
+- Setup scripts to set environment to backend stack @done(2023-08-29)
+- Setup scripts to set upper folder Pulumi to use backend @done(2023-08-29)
+- Deploy S3 Bucket to store stack states @done(2023-08-29)
+	- Encrypt Bucket with rotating KMS key @done(2023-08-29)
+- Deploy rotating KMS key for encrypting stack secrets @done(2023-08-29)
+
+Pulumi Dev EKS:
+- Build out Dev Net VPC for EKS deployment
+- Fargate EKS?
+- Configure cluster parameters in Pulumi config
+- Deploy EKS cluster, single node
+- Write script to destroy environment
+- Use EKS/ALB to route into cluster
+- Route53 Dev record to target ALB
+- Deploy Application to EKS
+- Write test script to verify application deployment
+- Unit, Integration, and Lint test all infrastructure functions in Pulumi template
+
+Pulumi Prod EKS:
+- Use Dev stack, adjust for Production configs
+- Use non-dev DNS record
+- Deploy multiple nodes
+- Set autoscaling
+- Implement load testing
+
+Tie it up in a bow:
+- Write simple scripts to deploy, update, destroy Dev/Prod environment
+- Documentation
