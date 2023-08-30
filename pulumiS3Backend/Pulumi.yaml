@@ -1,0 +1,8 @@
+name: fantastic-waffle
+backend:
+  url: file://./.pulumi_state
+runtime:
+  name: nodejs
+  options:
+    typescript: false
+description: A minimal AWS JavaScript Pulumi program

@@ -1,0 +1,32 @@
+{
+    "kind": "update",
+    "startTime": 1693355000,
+    "message": "Initial commit",
+    "environment": {
+        "exec.kind": "cli",
+        "git.author": "Daniel Hagen",
+        "git.author.email": "5039466+dbhagen@users.noreply.github.com",
+        "git.committer": "GitHub",
+        "git.committer.email": "noreply@github.com",
+        "git.dirty": "true",
+        "git.head": "dbc34b088f2b2c5649025485dda0bca6707416ed",
+        "git.headName": "refs/heads/main",
+        "pulumi.arch": "arm64",
+        "pulumi.env.PULUMI_CONFIG_PASSPHRASE": "set",
+        "pulumi.os": "darwin",
+        "pulumi.version": "v3.78.1",
+        "updatePlan": "false",
+        "vcs.kind": "github.com",
+        "vcs.owner": "dbhagen",
+        "vcs.repo": "fantastic-waffle",
+        "vcs.root": "pulumiS3Backend"
+    },
+    "config": {},
+    "version": 0,
+    "result": "succeeded",
+    "endTime": 1693355002,
+    "resourceChanges": {
+        "delete": 1,
+        "same": 4
+    }
+}

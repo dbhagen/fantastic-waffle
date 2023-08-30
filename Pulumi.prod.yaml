@@ -1,0 +1,2 @@
+secretsprovider: awskms://c1c87a86-731a-48e6-8e6a-f8d99a7d7d2b?region=us-east-1
+encryptedkey: AQICAHg8rwnOx+kSM08XVzlvclMggoibw0xXC4DHHYMVtXz9vAE1RN1EtIGpEHBKhXj2PmO/AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMxbBghR6bnSdUBQujAgEQgDvip4hQQJ/LI6D7PVdfazI168mbWtHDMwkZf1WwlGWLCiYBoewzLRrFYbvIC+wexirDMXyVDfg9nYgakA==

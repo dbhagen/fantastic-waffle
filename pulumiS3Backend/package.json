@@ -1,0 +1,23 @@
+{
+  "name": "fantastic-waffle-pulumis3backend",
+  "main": "index.js",
+  "dependencies": {
+    "@pulumi/aws": "^5.0.0",
+    "@pulumi/command": "^0.8.2",
+    "@pulumi/pulumi": "^3.0.0"
+  },
+  "scripts": {
+    "stack:up": "pnpm check:AWS:ENV_EXISTS && pulumi up -y && pnpm update:root",
+    "check:AWS:ENV_EXISTS": "pnpm check:AWS:ENV_EXISTS:AWS_ACCESS_KEY_ID && pnpm check:AWS:ENV_EXISTS:AWS_SECRET_ACCESS_KEY && pnpm check:AWS:ENV_EXISTS:AWS_REGION",
+    "check:AWS:ENV_EXISTS:AWS_ACCESS_KEY_ID": "[ -z \"$AWS_ACCESS_KEY_ID\" ] && echo \"AWS_ACCESS_KEY_ID unset\" && exit 1 || echo \"AWS_ACCESS_KEY_ID set with key ending in: ${AWS_ACCESS_KEY_ID:0-4}\"",
+    "check:AWS:ENV_EXISTS:AWS_SECRET_ACCESS_KEY": "[ -z \"$AWS_SECRET_ACCESS_KEY\" ] && echo \"AWS_SECRET_ACCESS_KEY unset\" && exit 1 || echo \"AWS_SECRET_ACCESS_KEY set with key ending in: ${AWS_SECRET_ACCESS_KEY:0-4}\"",
+    "check:AWS:ENV_EXISTS:AWS_REGION": "[ -z \"$AWS_REGION\" ] && echo \"AWS_REGION unset\" && exit 1 || echo \"AWS_REGION set to: ${AWS_REGION}\"",
+    "update:root": "pulumi stack output --non-interactive --shell --show-secrets > ../.backend.config && pnpm update:root:Pulumi && pnpm update:root:Stacks",
+    "update:root:Pulumi": "PULUMI_S3_BACKEND=S3://$(cat ../.backend.config | grep S3 | cut -f2 -d\"=\"); sed -i -e \"s@url:.*@url: $PULUMI_S3_BACKEND@g\" ../Pulumi.yaml",
+    "update:root:Stacks": "PULUMI_KMS_BACKEND=awskms://$(cat ../.backend.config | grep KMS | cut -f2 -d\"=\")?region=us-east-1;  sed -i -e \"s@secretsprovider:.*@secretsprovider: $PULUMI_KMS_BACKEND@g\" ../Pulumi.*.yaml"
+  },
+  "description": "Infrastructure Project for Fantastic-Telegram, Pulumi S3 Backend",
+  "version": "1.0.0",
+  "author": "Daniel Hagen <daniel.b.hagen@gmail.com>",
+  "license": "Apache-2.0"
+}

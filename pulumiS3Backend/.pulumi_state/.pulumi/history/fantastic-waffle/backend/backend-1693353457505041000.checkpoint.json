@@ -1,0 +1,28 @@
+{
+    "version": 3,
+    "checkpoint": {
+        "stack": "organization/fantastic-waffle/backend",
+        "latest": {
+            "manifest": {
+                "time": "2023-08-29T18:57:37.494974-05:00",
+                "magic": "7f5ec831fbfcaaafb30fe1f9dd0eebc4a62372e9fda10d9bab6256b2deca869d",
+                "version": "v3.78.1"
+            },
+            "secrets_providers": {
+                "type": "passphrase",
+                "state": {
+                    "salt": "v1:q7/K7ejo5dg=:v1:GQ5oRd6el1f7wDPa:pihzyvHzaSY+JSwTu4tV2tLzDfrZCQ=="
+                }
+            },
+            "resources": [
+                {
+                    "urn": "urn:pulumi:backend::fantastic-waffle::pulumi:pulumi:Stack::fantastic-waffle-backend",
+                    "custom": false,
+                    "type": "pulumi:pulumi:Stack",
+                    "created": "2023-08-29T23:57:02.667178Z",
+                    "modified": "2023-08-29T23:57:02.667178Z"
+                }
+            ]
+        }
+    }
+}

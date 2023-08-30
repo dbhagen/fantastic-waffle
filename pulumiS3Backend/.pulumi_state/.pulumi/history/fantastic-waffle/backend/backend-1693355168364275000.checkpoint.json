@@ -1,0 +1,261 @@
+{
+    "version": 3,
+    "checkpoint": {
+        "stack": "organization/fantastic-waffle/backend",
+        "latest": {
+            "manifest": {
+                "time": "2023-08-29T19:26:08.349085-05:00",
+                "magic": "7f5ec831fbfcaaafb30fe1f9dd0eebc4a62372e9fda10d9bab6256b2deca869d",
+                "version": "v3.78.1"
+            },
+            "secrets_providers": {
+                "type": "passphrase",
+                "state": {
+                    "salt": "v1:qUDJxnRyv0U=:v1:sKGSQfBpIRTUx2tS:riTaqNgBvlePyzm2sHRmSj//hgqRZg=="
+                }
+            },
+            "resources": [
+                {
+                    "urn": "urn:pulumi:backend::fantastic-waffle::pulumi:pulumi:Stack::fantastic-waffle-backend",
+                    "custom": false,
+                    "type": "pulumi:pulumi:Stack",
+                    "outputs": {
+                        "pulumiKMSEncryptionKeyARN": "arn:aws:kms:us-east-1:782559036331:key/c1c87a86-731a-48e6-8e6a-f8d99a7d7d2b",
+                        "pulumiS3BackendName": "pulumis3backend-422f8c2"
+                    },
+                    "created": "2023-08-29T23:57:02.667178Z",
+                    "modified": "2023-08-29T23:57:02.667178Z"
+                },
+                {
+                    "urn": "urn:pulumi:backend::fantastic-waffle::pulumi:providers:aws::default_5_42_0",
+                    "custom": true,
+                    "id": "42f9453d-950f-46be-bd7c-d8d2264a64a0",
+                    "type": "pulumi:providers:aws",
+                    "inputs": {
+                        "version": "5.42.0"
+                    },
+                    "outputs": {
+                        "version": "5.42.0"
+                    },
+                    "created": "2023-08-30T00:07:29.666241Z",
+                    "modified": "2023-08-30T00:07:29.666241Z"
+                },
+                {
+                    "urn": "urn:pulumi:backend::fantastic-waffle::aws:kms/key:Key::pulumiKMSEncryptionKey",
+                    "custom": true,
+                    "id": "c1c87a86-731a-48e6-8e6a-f8d99a7d7d2b",
+                    "type": "aws:kms/key:Key",
+                    "inputs": {
+                        "__defaults": [
+                            "bypassPolicyLockoutSafetyCheck",
+                            "customerMasterKeySpec",
+                            "keyUsage"
+                        ],
+                        "bypassPolicyLockoutSafetyCheck": false,
+                        "customerMasterKeySpec": "SYMMETRIC_DEFAULT",
+                        "deletionWindowInDays": 30,
+                        "description": "This key is used to encrypt Pulumi Secrets",
+                        "enableKeyRotation": true,
+                        "isEnabled": true,
+                        "keyUsage": "ENCRYPT_DECRYPT",
+                        "tags": {
+                            "Environment": "Prod",
+                            "Name": "pulumiKMSEncryptionKey",
+                            "__defaults": []
+                        }
+                    },
+                    "outputs": {
+                        "arn": "arn:aws:kms:us-east-1:782559036331:key/c1c87a86-731a-48e6-8e6a-f8d99a7d7d2b",
+                        "bypassPolicyLockoutSafetyCheck": false,
+                        "customKeyStoreId": "",
+                        "customerMasterKeySpec": "SYMMETRIC_DEFAULT",
+                        "deletionWindowInDays": 30,
+                        "description": "This key is used to encrypt Pulumi Secrets",
+                        "enableKeyRotation": true,
+                        "id": "c1c87a86-731a-48e6-8e6a-f8d99a7d7d2b",
+                        "isEnabled": true,
+                        "keyId": "c1c87a86-731a-48e6-8e6a-f8d99a7d7d2b",
+                        "keyUsage": "ENCRYPT_DECRYPT",
+                        "multiRegion": false,
+                        "policy": "{\"Id\":\"key-default-1\",\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::782559036331:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}",
+                        "tags": {
+                            "Environment": "Prod",
+                            "Name": "pulumiKMSEncryptionKey"
+                        },
+                        "tagsAll": {
+                            "Environment": "Prod",
+                            "Name": "pulumiKMSEncryptionKey"
+                        }
+                    },
+                    "parent": "urn:pulumi:backend::fantastic-waffle::pulumi:pulumi:Stack::fantastic-waffle-backend",
+                    "provider": "urn:pulumi:backend::fantastic-waffle::pulumi:providers:aws::default_5_42_0::42f9453d-950f-46be-bd7c-d8d2264a64a0",
+                    "propertyDependencies": {
+                        "deletionWindowInDays": null,
+                        "description": null,
+                        "enableKeyRotation": null,
+                        "isEnabled": null,
+                        "tags": null
+                    },
+                    "created": "2023-08-30T00:07:39.724982Z",
+                    "modified": "2023-08-30T00:07:39.724982Z",
+                    "sourcePosition": "project:///index.js#17,32"
+                },
+                {
+                    "urn": "urn:pulumi:backend::fantastic-waffle::aws:kms/key:Key::pulumiS3BackendKMSEncryptionKey",
+                    "custom": true,
+                    "id": "7325f411-f6ac-4efc-8d60-9f5e982c9d04",
+                    "type": "aws:kms/key:Key",
+                    "inputs": {
+                        "__defaults": [
+                            "bypassPolicyLockoutSafetyCheck",
+                            "customerMasterKeySpec",
+                            "keyUsage"
+                        ],
+                        "bypassPolicyLockoutSafetyCheck": false,
+                        "customerMasterKeySpec": "SYMMETRIC_DEFAULT",
+                        "deletionWindowInDays": 30,
+                        "description": "This key is used to encrypt bucket objects",
+                        "enableKeyRotation": true,
+                        "isEnabled": true,
+                        "keyUsage": "ENCRYPT_DECRYPT",
+                        "tags": {
+                            "Environment": "Prod",
+                            "Name": "pulumiS3BackendBucket",
+                            "__defaults": []
+                        }
+                    },
+                    "outputs": {
+                        "arn": "arn:aws:kms:us-east-1:782559036331:key/7325f411-f6ac-4efc-8d60-9f5e982c9d04",
+                        "bypassPolicyLockoutSafetyCheck": false,
+                        "customKeyStoreId": "",
+                        "customerMasterKeySpec": "SYMMETRIC_DEFAULT",
+                        "deletionWindowInDays": 30,
+                        "description": "This key is used to encrypt bucket objects",
+                        "enableKeyRotation": true,
+                        "id": "7325f411-f6ac-4efc-8d60-9f5e982c9d04",
+                        "isEnabled": true,
+                        "keyId": "7325f411-f6ac-4efc-8d60-9f5e982c9d04",
+                        "keyUsage": "ENCRYPT_DECRYPT",
+                        "multiRegion": false,
+                        "policy": "{\"Id\":\"key-default-1\",\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::782559036331:root\"},\"Resource\":\"*\",\"Sid\":\"Enable IAM User Permissions\"}],\"Version\":\"2012-10-17\"}",
+                        "tags": {
+                            "Environment": "Prod",
+                            "Name": "pulumiS3BackendBucket"
+                        },
+                        "tagsAll": {
+                            "Environment": "Prod",
+                            "Name": "pulumiS3BackendBucket"
+                        }
+                    },
+                    "parent": "urn:pulumi:backend::fantastic-waffle::pulumi:pulumi:Stack::fantastic-waffle-backend",
+                    "provider": "urn:pulumi:backend::fantastic-waffle::pulumi:providers:aws::default_5_42_0::42f9453d-950f-46be-bd7c-d8d2264a64a0",
+                    "propertyDependencies": {
+                        "deletionWindowInDays": null,
+                        "description": null,
+                        "enableKeyRotation": null,
+                        "isEnabled": null,
+                        "tags": null
+                    },
+                    "created": "2023-08-30T00:07:39.78799Z",
+                    "modified": "2023-08-30T00:07:39.78799Z",
+                    "sourcePosition": "project:///index.js#6,41"
+                },
+                {
+                    "urn": "urn:pulumi:backend::fantastic-waffle::aws:s3/bucket:Bucket::pulumiS3Backend",
+                    "custom": true,
+                    "id": "pulumis3backend-422f8c2",
+                    "type": "aws:s3/bucket:Bucket",
+                    "inputs": {
+                        "__defaults": [
+                            "bucket",
+                            "forceDestroy"
+                        ],
+                        "acl": "private",
+                        "bucket": "pulumis3backend-422f8c2",
+                        "forceDestroy": false,
+                        "serverSideEncryptionConfiguration": {
+                            "__defaults": [],
+                            "rule": {
+                                "__defaults": [],
+                                "applyServerSideEncryptionByDefault": {
+                                    "__defaults": [],
+                                    "kmsMasterKeyId": "arn:aws:kms:us-east-1:782559036331:key/7325f411-f6ac-4efc-8d60-9f5e982c9d04",
+                                    "sseAlgorithm": "aws:kms"
+                                }
+                            }
+                        },
+                        "tags": {
+                            "Environment": "Prod",
+                            "Name": "pulumiS3BackendBucket",
+                            "__defaults": []
+                        },
+                        "versioning": {
+                            "__defaults": [
+                                "mfaDelete"
+                            ],
+                            "enabled": true,
+                            "mfaDelete": false
+                        }
+                    },
+                    "outputs": {
+                        "accelerationStatus": "",
+                        "acl": "private",
+                        "arn": "arn:aws:s3:::pulumis3backend-422f8c2",
+                        "bucket": "pulumis3backend-422f8c2",
+                        "bucketDomainName": "pulumis3backend-422f8c2.s3.amazonaws.com",
+                        "bucketRegionalDomainName": "pulumis3backend-422f8c2.s3.amazonaws.com",
+                        "corsRules": [],
+                        "forceDestroy": false,
+                        "grants": [],
+                        "hostedZoneId": "Z3AQBSTGFYJSTF",
+                        "id": "pulumis3backend-422f8c2",
+                        "lifecycleRules": [],
+                        "loggings": [],
+                        "objectLockConfiguration": null,
+                        "region": "us-east-1",
+                        "replicationConfiguration": null,
+                        "requestPayer": "BucketOwner",
+                        "serverSideEncryptionConfiguration": {
+                            "rule": {
+                                "applyServerSideEncryptionByDefault": {
+                                    "kmsMasterKeyId": "arn:aws:kms:us-east-1:782559036331:key/7325f411-f6ac-4efc-8d60-9f5e982c9d04",
+                                    "sseAlgorithm": "aws:kms"
+                                },
+                                "bucketKeyEnabled": false
+                            }
+                        },
+                        "tags": {
+                            "Environment": "Prod",
+                            "Name": "pulumiS3BackendBucket"
+                        },
+                        "tagsAll": {
+                            "Environment": "Prod",
+                            "Name": "pulumiS3BackendBucket"
+                        },
+                        "versioning": {
+                            "enabled": true,
+                            "mfaDelete": false
+                        },
+                        "website": null
+                    },
+                    "parent": "urn:pulumi:backend::fantastic-waffle::pulumi:pulumi:Stack::fantastic-waffle-backend",
+                    "dependencies": [
+                        "urn:pulumi:backend::fantastic-waffle::aws:kms/key:Key::pulumiS3BackendKMSEncryptionKey"
+                    ],
+                    "provider": "urn:pulumi:backend::fantastic-waffle::pulumi:providers:aws::default_5_42_0::42f9453d-950f-46be-bd7c-d8d2264a64a0",
+                    "propertyDependencies": {
+                        "acl": null,
+                        "serverSideEncryptionConfiguration": [
+                            "urn:pulumi:backend::fantastic-waffle::aws:kms/key:Key::pulumiS3BackendKMSEncryptionKey"
+                        ],
+                        "tags": null,
+                        "versioning": null
+                    },
+                    "created": "2023-08-30T00:07:41.957624Z",
+                    "modified": "2023-08-30T00:07:41.957624Z",
+                    "sourcePosition": "project:///index.js#29,25"
+                }
+            ]
+        }
+    }
+}
