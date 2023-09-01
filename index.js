@@ -1,10 +1,27 @@
-"use strict";
-const pulumi = require("@pulumi/pulumi");
-const aws = require("@pulumi/aws");
-const awsx = require("@pulumi/awsx");
+// const pulumi = require('@pulumi/pulumi')
+// const aws = require('@pulumi/aws')
+const Vpc = require('./vpc')
+const Eks = require('./eks')
 
-// Create an AWS resource (S3 Bucket)
-const bucket = new aws.s3.Bucket("my-bucket");
+const defaultTags = {
+  created: new Date().toISOString(),
+  updated: new Date().toISOString(),
+  project: 'fantastic-waffle',
+}
+// eslint-disable-next-line no-unused-vars
+const vpcI = Vpc('VpcI', {
+  cidrBlock: '172.20.0.0/16',
+  subnets: [
+    { az: 'a', dmz: true, cidrBlock: '172.20.1.0/24' },
+    { az: 'b', dmz: true, cidrBlock: '172.20.2.0/24' },
+  ],
+  tags: defaultTags,
+})
 
-// Export the name of the bucket
-exports.bucketName = bucket.id;
+const _eksI = Eks('EksI', {
+  subnets: vpcI.subnets,
+  tags: defaultTags,
+})
+
+// exports.vpc = vpcI.vpc
+// exports.vpcSubnets = vpcI.subnets

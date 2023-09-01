@@ -4,16 +4,19 @@
     "@pulumi/aws": "^5.0.0",
     "@pulumi/awsx": "^1.0.0",
     "@pulumi/command": "^0.8.2",
-    "@pulumi/pulumi": "^3.0.0"
+    "@pulumi/pulumi": "^3.0.0",
+    "is-cidr": "^5.0.3"
   },
   "description": "Infrastructure Project for Fantastic-Telegram",
   "version": "1.0.0",
+  "type": "commonjs",
   "devDependencies": {
     "eslint": "^8.48.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jest": "^27.2.3",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-security": "^1.7.1",
     "jest": "^29.6.4",
     "jest-extended": "^4.0.1",
@@ -27,7 +30,11 @@
     "check:AWS:ENV_EXISTS": "pnpm check:AWS:ENV_EXISTS:AWS_ACCESS_KEY_ID && pnpm check:AWS:ENV_EXISTS:AWS_SECRET_ACCESS_KEY && pnpm check:AWS:ENV_EXISTS:AWS_REGION",
     "check:AWS:ENV_EXISTS:AWS_ACCESS_KEY_ID": "[ -z \"$AWS_ACCESS_KEY_ID\" ] && echo \"AWS_ACCESS_KEY_ID unset\" && exit 1 || echo \"AWS_ACCESS_KEY_ID set with key ending in: ${AWS_ACCESS_KEY_ID:0-4}\"",
     "check:AWS:ENV_EXISTS:AWS_SECRET_ACCESS_KEY": "[ -z \"$AWS_SECRET_ACCESS_KEY\" ] && echo \"AWS_SECRET_ACCESS_KEY unset\" && exit 1 || echo \"AWS_SECRET_ACCESS_KEY set with key ending in: ${AWS_SECRET_ACCESS_KEY:0-4}\"",
-    "check:AWS:ENV_EXISTS:AWS_REGION": "[ -z \"$AWS_REGION\" ] && echo \"AWS_REGION unset\" && exit 1 || echo \"AWS_REGION set to: ${AWS_REGION}\""
+    "check:AWS:ENV_EXISTS:AWS_REGION": "[ -z \"$AWS_REGION\" ] && echo \"AWS_REGION unset\" && exit 1 || echo \"AWS_REGION set to: ${AWS_REGION}\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prettier": "prettier --check **/*.js",
+    "prettier:fix": "prettier --write **/*.js"
   },
   "author": "Daniel Hagen <daniel.b.hagen@gmail.com>",
   "license": "Apache-2.0"
