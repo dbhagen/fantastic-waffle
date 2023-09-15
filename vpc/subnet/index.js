@@ -1,4 +1,4 @@
-const aws = require('@pulumi/aws')
+const aws = require('@pulumi/awsx')
 
 function Subnet(name, { dmz = false, tags = {}, ...theArgs } = {}) {
   if (!(this instanceof Subnet)) {

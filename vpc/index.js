@@ -1,4 +1,4 @@
-const aws = require('@pulumi/aws')
+const awsx = require('@pulumi/awsx')
 const Subnet = require('./subnet')
 const ipTools = require('../utils/ipTools')
 
@@ -20,7 +20,7 @@ function Vpc(
     return new Vpc(name, { cidrBlock, subnets, tags, ...theArgs })
   }
 
-  this.vpc = new aws.ec2.Vpc(
+  this.vpc = new awsx.ec2.Vpc(
     name,
     {
       cidrBlock,
@@ -34,10 +34,9 @@ function Vpc(
     }
   )
 
-  this.igw = new aws.ec2.InternetGateway(
+  this.igw = new awsx.ec2.InternetGateway(
     `${name}-igw`,
     {
-      vpcId: this.vpc.id,
       tags: { Name: `${name}-igw`, ...tags },
     },
     {
@@ -45,7 +44,7 @@ function Vpc(
     }
   )
 
-  this.publicRouteTable = new aws.ec2.RouteTable(
+  this.publicRouteTable = new awsx.ec2.RouteTable(
     `${name}-PublicRouteTable`,
     {
       vpcId: this.vpc.id,
@@ -64,7 +63,7 @@ function Vpc(
       ignoreChanges: ['tags.created', 'tagsAll.created'],
     }
   )
-  this.privateRouteTable = new aws.ec2.RouteTable(
+  this.privateRouteTable = new awsx.ec2.RouteTable(
     `${name}-PrivateRouteTable`,
     {
       vpcId: this.vpc.id,
@@ -78,7 +77,7 @@ function Vpc(
     }
   )
 
-  const availableRegionAZs = aws.getAvailabilityZones({
+  const availableRegionAZs = awsx.getAvailabilityZones({
     state: 'available',
   })
 
@@ -94,7 +93,7 @@ function Vpc(
         dmz: subnet.dmz,
         tags,
       })
-      const _routeTableAssociation = new aws.ec2.RouteTableAssociation(
+      const _routeTableAssociation = new awsx.ec2.RouteTableAssociation(
         `Subnet${ipTools.romanize(index + 1)}-PrivateRouteTableAssociation`,
         {
           subnetId: tmpSubnet.id,
@@ -116,7 +115,7 @@ function Vpc(
         dmz: subnet.dmz,
         tags,
       })
-      const _routeTableAssociation = new aws.ec2.RouteTableAssociation(
+      const _routeTableAssociation = new awsx.ec2.RouteTableAssociation(
         `Subnet${ipTools.romanize(index + 1)}-PublicRouteTableAssociation`,
         {
           subnetId: tmpSubnet.id,
