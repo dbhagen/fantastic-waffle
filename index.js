@@ -57,15 +57,16 @@ const kubeConfigOpts = { profileName, region }
 const eksCluster = new eks.Cluster(
   `${clusterName}-cluster`,
   {
-    fargate: true,
     vpcId: vpc.vpcId,
+    desiredCapacity: clusterDesiredSize,
+    instanceType: eksInstanceType,
+    minSize: clusterMinSize,
+    maxSize: clusterMaxSize,
+    storageClasses: 'gp2',
+    publicSubnetIds: vpc.publicSubnetIds,
     privateSubnetIds: vpc.privateSubnetIds,
-    skipDefaultNodeGroup: true,
     providerCredentialOpts: kubeConfigOpts,
     enabledClusterLogTypes: ['api', 'audit', 'authenticator', 'controllerManager', 'scheduler'],
-    vpcCniOptions: {
-      disableTcpEarlyDemux: true,
-    },
   },
   {
     provider: awsProvider,
