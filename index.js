@@ -2,6 +2,8 @@
 // const aws = require('@pulumi/aws')
 const Vpc = require('./vpc')
 const Eks = require('./eks')
+const _kubeconfigBuilder = require('./kubeconfigBuilder')
+// const KubeDeployment = require('./kubeDeployment')
 
 const defaultTags = {
   created: new Date().toISOString(),
@@ -22,12 +24,13 @@ const vpcI = Vpc('VpcI', {
   tags: defaultTags,
 })
 
-const _eksI = Eks('EksI', {
+const eksI = Eks('EksI', {
   privateSubnets: vpcI.privateSubnets,
   publicSubnets: vpcI.publicSubnets,
   tags: defaultTags,
 })
 
+// console.log('KC', _kubeconfig, eksI.kubeAuth.id, eksI.kubeAuth.token)
 // exports.vpc = vpcI.vpc
 // exports.vpcSubnets = vpcI.privateSubnets
-exports.Eks = _eksI.kubeconfig
+exports.Eks = eksI.kubeconfig

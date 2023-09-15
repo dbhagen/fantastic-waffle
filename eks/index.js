@@ -1,4 +1,6 @@
 const aws = require('@pulumi/aws')
+const awsEks = require('@pulumi/eks')
+const _kubeconfigBuilder = require('../kubeconfigBuilder')
 
 function Eks(name, { privateSubnets = [], publicSubnets = [], tags = {}, ...theArgs } = {}) {
   if (!(this instanceof Eks)) {
@@ -65,6 +67,18 @@ function Eks(name, { privateSubnets = [], publicSubnets = [], tags = {}, ...theA
       ignoreChanges: ['tags.created', 'tagsAll.created', 'vpcConfig'],
     }
   )
+  this.kubeAuth = aws.eks.getClusterAuthOutput({
+    name: `${name}Cluster`,
+  })
+
+  // this.kubeconfig = kubeconfigBuilder('EksI', {
+  //   clusterAccessPoint: this.eks.endpoint,
+  //   certificateAuthorityData: this.eks.certificateAuthority.data,
+  //   userName: this.kubeAuth.id,
+  //   userAuthToken: this.kubeAuth.token,
+  // }).kubeconfig
+
+  this.kubeconfig = this.eks.getProviderOutput()
 
   // const { accountId } = aws.getCallerIdentityOutput({})
   // const awsRegion = aws.getRegionOutput({})
@@ -121,8 +135,6 @@ function Eks(name, { privateSubnets = [], publicSubnets = [], tags = {}, ...theA
       ignoreChanges: ['tags.created', 'tagsAll.created'],
     }
   )
-
-  this.kubeconfig = this.eks.kubeconfig
 }
 
 module.exports = Eks
