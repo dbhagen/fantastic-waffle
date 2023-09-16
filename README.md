@@ -30,6 +30,32 @@ Set the following Environment Variables:
 npm install
 ```
 
+# Configuration
+
+## The following configuration options can be customized:
+
+- `clusterName`: The name of the EKS cluster. Default: `eks-i`
+- `clusterDesiredSize`: The desired number of nodes in the EKS cluster. Default: `2`
+- `clusterMinSize`: The minimum number of nodes in the EKS cluster. Default: `1`
+- `clusterMaxSize`: The maximum number of nodes in the EKS cluster. Default: `2`
+- `clusterVpcCIDR`: The CIDR block for the EKS cluster's VPC. Default: `10.0.0.0/16`
+- `deploymentName`: The name of the app deployment. Default: `nginx`
+- `deploymentImage`: The Docker image to use for the app deployment. Default: `nginx:latest`
+- `deploymentPort`: The port that the app deployment listens on. Default: 80
+- `deploymentReplicas`: The number of replicas of the app deployment. Default: 1
+
+To modify any of these, use the following command format:
+
+```bash
+pulumi config set <config_option_name> <config_option_value>
+```
+
+Like:
+
+```bash
+pulumi config set clusterName waffles
+```
+
 ## Preview Pulumi stack deployment and review proposed creation or changes
 
 ```bash
