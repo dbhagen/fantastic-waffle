@@ -1,5 +1,5 @@
 const aws = require('@pulumi/aws')
-const awsEks = require('@pulumi/eks')
+// const awsEks = require('@pulumi/eks')
 const _kubeconfigBuilder = require('../kubeconfigBuilder')
 
 function Eks(name, { privateSubnets = [], publicSubnets = [], tags = {}, ...theArgs } = {}) {
