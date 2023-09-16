@@ -22,17 +22,17 @@ Set the following Environment Variables:
 - `AWS_DEFAULT_OUTPUT` environment variable set to `json`
 - `AWS_REGION` environment variable set to a valid AWS region
 
-# Usage:
-
 ## Install Pulumi stack dependancies
 
 ```bash
 npm install
 ```
 
-# Configuration
+# Usage:
 
-## The following configuration options can be customized:
+## Configuration
+
+### The following configuration options can be customized:
 
 - `clusterName`: The name of the EKS cluster. Default: `eks-i`
 - `clusterDesiredSize`: The desired number of nodes in the EKS cluster. Default: `2`
