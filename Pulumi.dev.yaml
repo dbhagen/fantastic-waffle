@@ -1,8 +1,12 @@
 secretsprovider: awskms://c1c87a86-731a-48e6-8e6a-f8d99a7d7d2b?region=us-east-1
 encryptedkey: AQICAHg8rwnOx+kSM08XVzlvclMggoibw0xXC4DHHYMVtXz9vAGnLkc/j1XnkiH5B4U6Di0nAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMtztzDU73ATkUe2j9AgEQgDv6lssApBwFXXC7fNk3CUPIFETIhrk2soFiJ/uJi4Yfg/xtGrOnc8OxEBhyOtLueznjHlaJN5VDL15kpA==
 config:
-  fantastic-waffle:clusterDesiredSize: "2"
-  fantastic-waffle:clusterMaxSize: "2"
+  fantastic-waffle:clusterDesiredSize: "3"
+  fantastic-waffle:clusterMaxSize: "3"
   fantastic-waffle:clusterMinSize: "1"
   fantastic-waffle:clusterName: eks-i
+  fantastic-waffle:deploymentImage: dbhagen/fantastic-telegram:latest
+  fantastic-waffle:deploymentName: fantastic-telegram
+  fantastic-waffle:deploymentPort: "3000"
+  fantastic-waffle:deploymentReplicas: "1"
   fantastic-waffle:vpcCIDR: 10.0.0.0/16

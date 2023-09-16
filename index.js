@@ -17,12 +17,14 @@ const currentDate = new Date().toISOString()
 const pulumiConfig = new pulumi.Config()
 
 const clusterName = pulumiConfig.get('clusterName') ? pulumiConfig.get('clusterName') : 'eks-i'
-const clusterDesiredSize = pulumiConfig.get('clusterDesiredSize') ? pulumiConfig.get('clusterDesiredSize') : 2
-const clusterMinSize = pulumiConfig.get('clusterMinSize') ? pulumiConfig.get('clusterMinSize') : 1
-const clusterMaxSize = pulumiConfig.get('clusterMaxSize') ? pulumiConfig.get('clusterMaxSize') : 2
-const vpcCIDR = pulumiConfig.get('vpcCIDR') ? pulumiConfig.get('vpcCIDR') : '10.0.0.0/16'
+const clusterDesiredSize = pulumiConfig.get('clusterDesiredSize') ? parseInt(pulumiConfig.get('clusterDesiredSize'), 10) : 2
+const clusterMinSize = pulumiConfig.get('clusterMinSize') ? parseInt(pulumiConfig.get('clusterMinSize'), 10) : 1
+const clusterMaxSize = pulumiConfig.get('clusterMaxSize') ? parseInt(pulumiConfig.get('clusterMaxSize'), 10) : 2
+const clusterVpcCIDR = pulumiConfig.get('clusterVpcCIDR') ? pulumiConfig.get('clusterVpcCIDR') : '10.0.0.0/16'
+const deploymentName = pulumiConfig.get('deploymentName') ? pulumiConfig.get('deploymentName') : 'fantastic-telegram'
 const deploymentImage = pulumiConfig.get('deploymentImage') ? pulumiConfig.get('deploymentImage') : 'nginx:latest'
-const deploymentReplicas = pulumiConfig.get('deploymentReplicas') ? pulumiConfig.get('deploymentReplicas') : 1
+const deploymentPort = pulumiConfig.get('deploymentPort') ? parseInt(pulumiConfig.get('deploymentPort'), 10) : 80
+const deploymentReplicas = pulumiConfig.get('deploymentReplicas') ? parseInt(pulumiConfig.get('deploymentReplicas'), 10) : 1
 const projectName = pulumi.getProject()
 
 if (!process.env.AWS_PROFILE) {
@@ -47,8 +49,23 @@ const awsProvider = new aws.Provider('aws-provider', {
   },
 })
 
-const vpc = new awsx.ec2.Vpc(`${clusterName}-vpc`, {}, { provider: awsProvider })
-exports.vpc = vpc
+const vpc = new awsx.ec2.Vpc(
+  `${clusterName}-vpc`,
+  {
+    cidrBlock: clusterVpcCIDR,
+    natGateways: {
+      strategy: awsx.ec2.NatGatewayStrategy.None,
+    },
+    subnetSpecs: [
+      {
+        type: awsx.ec2.SubnetType.Public,
+        cidrMask: 24,
+      },
+    ],
+  },
+  { provider: awsProvider }
+)
+// exports.vpc = vpc
 
 const eksInstanceType = 't2.micro'
 
@@ -64,7 +81,6 @@ const eksCluster = new eks.Cluster(
     maxSize: clusterMaxSize,
     storageClasses: 'gp2',
     publicSubnetIds: vpc.publicSubnetIds,
-    privateSubnetIds: vpc.privateSubnetIds,
     providerCredentialOpts: kubeConfigOpts,
     enabledClusterLogTypes: ['api', 'audit', 'authenticator', 'controllerManager', 'scheduler'],
   },
@@ -82,13 +98,51 @@ exports.kubeconfig = eksCluster.kubeconfig.apply((kc) => {
 })
 // exports.kubeconfig = eksCluster.kubeconfig // returns JSON???
 
-const appNamespace = new k8s.core.v1.Namespace(`${clusterName}-k8s-app-namespace`, {}, { provider: eksCluster.provider })
+const appNamespace = new k8s.core.v1.Namespace(`${clusterName}-namespace`, {}, { provider: eksCluster.provider })
 const namespaceName = appNamespace.metadata.apply((m) => m.name)
-exports.namespaceName = namespaceName
+// exports.namespaceName = namespaceName
 
-const appLabels = { appClass: `${clusterName}-app-class` }
-const deployment = new k8s.apps.v1.Deployment(
-  `${clusterName}-k8s-deployment`,
+const appLabels = { appClass: `${clusterName}-apps` }
+
+// const deployment = new k8s.apps.v1.Deployment(
+//   'nginx',
+//   {
+//     metadata: {
+//       namespace: namespaceName,
+//       labels: appLabels,
+//     },
+//     spec: {
+//       replicas: 1,
+//       selector: { matchLabels: appLabels },
+//       template: {
+//         metadata: {
+//           labels: appLabels,
+//         },
+//         spec: {
+//           containers: [
+//             {
+//               name: 'nginx-container',
+//               image: 'nginx:latest',
+//               ports: [
+//                 {
+//                   name: 'http',
+//                   containerPort: 80,
+//                 },
+//               ],
+//             },
+//           ],
+//         },
+//       },
+//     },
+//   },
+//   {
+//     provider: eksCluster.provider,
+//     dependsOn: [eksCluster],
+//     customTimeouts: { create: '1m', update: '1m' },
+//   }
+// )
+const appDeployment = new k8s.apps.v1.Deployment(
+  deploymentName,
   {
     metadata: {
       namespace: namespaceName,
@@ -104,12 +158,12 @@ const deployment = new k8s.apps.v1.Deployment(
         spec: {
           containers: [
             {
-              name: `${clusterName}-k8s-nginx`,
+              name: `${deploymentName}-container`,
               image: deploymentImage,
               ports: [
                 {
                   name: 'http',
-                  containerPort: 80,
+                  containerPort: deploymentPort,
                 },
               ],
             },
@@ -120,11 +174,13 @@ const deployment = new k8s.apps.v1.Deployment(
   },
   {
     provider: eksCluster.provider,
+    dependsOn: [eksCluster],
+    customTimeouts: { create: '1m', update: '1m' },
   }
 )
 
-const deploymentName = deployment.metadata.apply((m) => m.name)
-exports.deploymentName = deploymentName
+// const deploymentName = deployment.metadata.apply((m) => m.name)
+// exports.deploymentName = deploymentName
 
 const loadBalancerService = new k8s.core.v1.Service(
   `${clusterName}-lb-service`,
@@ -140,12 +196,13 @@ const loadBalancerService = new k8s.core.v1.Service(
     },
   },
   {
+    dependsOn: [appDeployment, eksCluster],
     provider: eksCluster.provider,
+    customTimeouts: { create: '1m', update: '1m' },
   }
 )
 
-const loadBalancerServiceName = loadBalancerService.metadata.apply((m) => m.name)
+// // const loadBalancerServiceName = loadBalancerService.metadata.apply((m) => m.name)
+// // exports.loadBalancerServiceName = loadBalancerServiceName
 const loadBalancerServiceHostname = loadBalancerService.status.apply((s) => s.loadBalancer.ingress[0].hostname)
-
-exports.loadBalancerServiceName = loadBalancerServiceName
 exports.loadBalancerServiceHostname = loadBalancerServiceHostname
