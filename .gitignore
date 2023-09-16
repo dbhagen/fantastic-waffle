@@ -3,3 +3,5 @@
 **/*.awsprofile
 .backend.config
 **/*.yaml-e
+kubeconfig.yaml
+kubeconfig.yml

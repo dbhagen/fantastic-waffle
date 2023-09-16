@@ -103,7 +103,7 @@ const kubeConfigOpts = { profileName, region }
 the `@pulumi/eks` package and parameters set before. Statically set is enabling logging and storage class
 for the EC2 node instances. */
 const eksCluster = new eks.Cluster(
-  `${clusterName}-cluster`,
+  clusterName,
   {
     vpcId: vpc.vpcId,
     desiredCapacity: clusterDesiredSize,
@@ -178,9 +178,9 @@ const appDeployment = new k8s.apps.v1.Deployment(
               `nginx:latest`. This tells Kubernetes to pull the specified image from a container registry
               and use it to create the container within the deployment. */
               image: deploymentImage,
-              /* The `imagePullPolicy: 'always'` setting in the Kubernetes Deployment object specifies the
+              /* The `imagePullPolicy: 'Always'` setting in the Kubernetes Deployment object specifies the
               policy for pulling the container image, requiring the image to be pulled during every update. */
-              imagePullPolicy: 'always',
+              imagePullPolicy: 'Always',
               /* Specify the ports that should be exposed by the container within the Kubernetes Deployment
               object. In this case, it is an array of objects, where each object represents a port
               configuration. */
@@ -246,3 +246,4 @@ const loadBalancerService = new k8s.core.v1.Service(
 
 const loadBalancerServiceHostname = loadBalancerService.status.apply((s) => s.loadBalancer.ingress[0].hostname)
 exports.loadBalancerServiceHostname = loadBalancerServiceHostname
+exports.url = loadBalancerServiceHostname
