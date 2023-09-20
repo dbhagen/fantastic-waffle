@@ -85,14 +85,19 @@ function Vpc(
   this.privateSubnets = subnets.map((subnet, index) => {
     if (!subnet.dmz) {
       subnetCounter += 1
-      const tmpSubnet = Subnet(`Subnet${ipTools.romanize(subnetCounter)}-${subnet.dmz ? 'dmz' : 'private'}`, {
-        vpcId: this.vpc.id,
-        // eslint-disable-next-line security/detect-object-injection
-        availabilityZone: availableRegionAZs.then((az) => az.names[index]),
-        cidrBlock: subnet.cidrBlock,
-        dmz: subnet.dmz,
-        tags,
-      })
+      const tmpSubnet = Subnet(
+        // eslint-disable-next-line prettier/prettier
+        `Subnet${ipTools.romanize(subnetCounter)}-${subnet.dmz ? 'dmz' : 'private'
+        }`,
+        {
+          vpcId: this.vpc.id,
+          // eslint-disable-next-line security/detect-object-injection
+          availabilityZone: availableRegionAZs.then((az) => az.names[index]),
+          cidrBlock: subnet.cidrBlock,
+          dmz: subnet.dmz,
+          tags,
+        }
+      )
       const _routeTableAssociation = new awsx.ec2.RouteTableAssociation(
         `Subnet${ipTools.romanize(index + 1)}-PrivateRouteTableAssociation`,
         {
@@ -107,14 +112,19 @@ function Vpc(
   this.publicSubnets = subnets.map((subnet, index) => {
     subnetCounter += 1
     if (subnet.dmz) {
-      const tmpSubnet = Subnet(`Subnet${ipTools.romanize(subnetCounter)}-${subnet.dmz ? 'dmz' : 'private'}`, {
-        vpcId: this.vpc.id,
-        // eslint-disable-next-line security/detect-object-injection
-        availabilityZone: availableRegionAZs.then((az) => az.names[index]),
-        cidrBlock: subnet.cidrBlock,
-        dmz: subnet.dmz,
-        tags,
-      })
+      const tmpSubnet = Subnet(
+        // eslint-disable-next-line prettier/prettier
+        `Subnet${ipTools.romanize(subnetCounter)}-${subnet.dmz ? 'dmz' : 'private'
+        }`,
+        {
+          vpcId: this.vpc.id,
+          // eslint-disable-next-line security/detect-object-injection
+          availabilityZone: availableRegionAZs.then((az) => az.names[index]),
+          cidrBlock: subnet.cidrBlock,
+          dmz: subnet.dmz,
+          tags,
+        }
+      )
       const _routeTableAssociation = new awsx.ec2.RouteTableAssociation(
         `Subnet${ipTools.romanize(index + 1)}-PublicRouteTableAssociation`,
         {

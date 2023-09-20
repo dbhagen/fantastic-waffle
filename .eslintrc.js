@@ -4,7 +4,12 @@ module.exports = {
     node: true,
     jest: true,
   },
-  extends: ['airbnb-base', 'plugin:jest/recommended', 'plugin:security/recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'airbnb-base',
+    'plugin:jest/recommended',
+    'plugin:security/recommended',
+    'plugin:prettier/recommended',
+  ],
   plugins: ['jest', 'security', 'prettier'],
   parserOptions: {
     ecmaVersion: 2018,
@@ -12,6 +17,9 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-underscore-dangle': 'off',
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    'no-unused-vars': [
+      'error',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
   },
 }

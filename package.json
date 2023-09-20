@@ -27,7 +27,6 @@
     "prettier": "^3.0.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "stack:dev:up": "pnpm check:AWS:ENV_EXISTS && pulumi stack select dev && pulumi up",
     "stack:prod:up": "pnpm check:AWS:ENV_EXISTS && pulumi stack select prod && pulumi up",
     "check:AWS:ENV_EXISTS": "pnpm check:AWS:ENV_EXISTS:AWS_ACCESS_KEY_ID && pnpm check:AWS:ENV_EXISTS:AWS_SECRET_ACCESS_KEY && pnpm check:AWS:ENV_EXISTS:AWS_REGION",
@@ -37,7 +36,16 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prettier": "prettier --check **/*.js",
-    "prettier:fix": "prettier --write **/*.js"
+    "prettier:fix": "prettier --write **/*.js",
+    "configure": "pulumi config",
+    "configure:set": "pulumi config set",
+    "configure:replicas": "pulumi config set deploymentReplicas",
+    "deploy:preview": "pulumi preview",
+    "deploy:diff": "pulumi preview --diff",
+    "deploy:apply": "pulumi up",
+    "deploy:destroy": "pulumi destroy",
+    "deploy:test": "curl $(pulumi stack output url --show-secrets)/v1/welcomeMessage",
+    "generate:kubeconfig": "pulumi stack output kubeconfig --show-secrets > kubeconfig.yml"
   },
   "author": "Daniel Hagen <daniel.b.hagen@gmail.com>",
   "license": "Apache-2.0"

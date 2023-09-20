@@ -2,7 +2,10 @@ const aws = require('@pulumi/aws')
 // const awsEks = require('@pulumi/eks')
 const _kubeconfigBuilder = require('../kubeconfigBuilder')
 
-function Eks(name, { privateSubnets = [], publicSubnets = [], tags = {}, ...theArgs } = {}) {
+function Eks(
+  name,
+  { privateSubnets = [], publicSubnets = [], tags = {}, ...theArgs } = {}
+) {
   if (!(this instanceof Eks)) {
     return new Eks(name, { privateSubnets, publicSubnets, tags, ...theArgs })
   }
@@ -22,7 +25,9 @@ function Eks(name, { privateSubnets = [], publicSubnets = [], tags = {}, ...theA
     ],
   })
 
-  this.eksRole = new aws.iam.Role(`${name}-role`, { assumeRolePolicy: this.eksAssumeRole.json })
+  this.eksRole = new aws.iam.Role(`${name}-role`, {
+    assumeRolePolicy: this.eksAssumeRole.json,
+  })
 
   this.eksClusterPolicy = new aws.iam.RolePolicyAttachment(
     `${name}-AmazonEKSClusterPolicy`,
@@ -108,7 +113,8 @@ function Eks(name, { privateSubnets = [], publicSubnets = [], tags = {}, ...theA
   this.eksFargatePodExecutionRolePolicy = new aws.iam.RolePolicyAttachment(
     `${name}-eksFargatePodExecutionRolePolicy`,
     {
-      policyArn: 'arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy',
+      policyArn:
+        'arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy',
       role: this.eksFargateRole,
       tags: { Name: name, ...tags },
     },
