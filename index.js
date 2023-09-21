@@ -245,7 +245,7 @@ const appDeployment = new k8s.apps.v1.Deployment(
     operation takes longer than 1 minute, Pulumi will consider it as a timeout and fail the operation.
     This property is useful for controlling the maximum time Pulumi spends waiting for resource
     operations to complete. */
-    customTimeouts: { create: '1m', update: '1m' },
+    customTimeouts: { create: '5m', update: '5m' },
   }
 )
 

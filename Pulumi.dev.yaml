@@ -5,8 +5,8 @@ config:
   fantastic-waffle:clusterMaxSize: "3"
   fantastic-waffle:clusterMinSize: "1"
   fantastic-waffle:clusterName: waffles
-  fantastic-waffle:deploymentImage: dbhagen/fantastic-telegram:latest
+  fantastic-waffle:deploymentImage: dbhagen/fantastic-telegram:ci-dev-20230920T2358Z-build
   fantastic-waffle:deploymentName: fantastic-telegram
   fantastic-waffle:deploymentPort: "3000"
-  fantastic-waffle:deploymentReplicas: "1"
+  fantastic-waffle:deploymentReplicas: "3"
   fantastic-waffle:vpcCIDR: 10.0.0.0/16

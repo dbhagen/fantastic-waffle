@@ -37,15 +37,17 @@
     "lint:fix": "eslint --fix .",
     "prettier": "prettier --check **/*.js",
     "prettier:fix": "prettier --write **/*.js",
-    "configure": "pulumi config",
-    "configure:set": "pulumi config set",
-    "configure:replicas": "pulumi config set deploymentReplicas",
+    "config": "pulumi config",
+    "config:set": "pulumi config set",
+    "config:replicas": "pulumi config set deploymentReplicas",
+    "config:image": "pulumi config set deploymentImage",
     "deploy:preview": "pulumi preview",
     "deploy:diff": "pulumi preview --diff",
     "deploy:apply": "pulumi up",
     "deploy:destroy": "pulumi destroy",
     "deploy:test": "curl $(pulumi stack output url --show-secrets)/v1/welcomeMessage",
-    "generate:kubeconfig": "pulumi stack output kubeconfig --show-secrets > kubeconfig.yml"
+    "generate:kubeconfig": "pulumi stack output kubeconfig --show-secrets > kubeconfig.yml",
+    "set:environment": "export AWS_REGION=us-east-1; export AWS_PROFILE=prod; export AWS_DEFAULT_OUTPUT=json;"
   },
   "author": "Daniel Hagen <daniel.b.hagen@gmail.com>",
   "license": "Apache-2.0"
