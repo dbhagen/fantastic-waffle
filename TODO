@@ -7,14 +7,16 @@ Pulumi Local Stack for Dev/Prod Backend:
 
 Pulumi EKS:
 - Fargate EKS?
-- Configure cluster parameters in Pulumi config
-- Deploy EKS cluster, single node
-- Write script to destroy environment
-- Use EKS/ALB to route into cluster
+  - Won't do for now, but good for elasticity @done
+- Configure cluster parameters in Pulumi config @done
+- Deploy EKS cluster, single node @done
+- Write script to destroy environment @done
+- Use EKS/ALB to route into cluster @done
 - Route53 Dev record to target ALB
-- Deploy Application to EKS
-- Write test script to verify application deployment
+  - Good to do for production, didn't do for now. @done
+- Deploy Application to EKS @done
+- Write test script to verify application deployment @done
 
 Tie it up in a bow:
-- Write simple scripts to deploy, update, destroy Dev/Prod environment
-- Documentation
+- Write simple scripts to deploy, update, destroy Dev/Prod environment @done
+- Documentation @done
